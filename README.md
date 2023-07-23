@@ -1,4 +1,4 @@
-# Project Terraform Infrastructure for AWS VPC and EKS Cluster and deploying aspent-mssql app 
+#  Infrastructure Provisioning for AWS VPC and EKS Cluster and deploying aspent-mssql app using terraform 
 
 ## Overview
 
