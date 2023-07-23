@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aspnet-mssql
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: aspnet-mssql
+  template:
+    metadata:
+      labels:
+        app: aspnet-mssql
+    spec:
+      containers:
+        - name: webapp
+          image: docker/awesome-compose-aspnetcore:latest
+          ports:
+            - containerPort: 80
+        - name: mssql
+          image: docker/awesome-compose-mssql:latest
+          ports:
+            - containerPort: 1433
+          env:
+            - name: SA_PASSWORD
+              value: "pass"
+            - name: ACCEPT_EULA
+              value: "Y"
+        - name: mongodb
+          image: mongo
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: "user"
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: "pass"
+          ports:
+            - containerPort: 27017
+        - name: redis
+          image: redis
+          env:
+            - name: REDIS_PASSWORD
+              value: "password"
+          ports:
+            - containerPort: 6379
+# use kubectl apply -f aspnet-mssql-deployment.yaml to apply the deployment 
+# now you get the app, monogodb, mssql, redis.
